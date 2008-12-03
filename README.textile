@@ -1,0 +1,37 @@
+h1. ActsAsOoyala
+
+This plugin wraps the Ooyala API into a acts_as module that we all know and love in the Rails world.
+
+h2. Example
+<pre>
+  <code>
+    class Video < ActiveResource::Base
+      acts_as_ooyala
+    end
+    
+    live = Video.find_live(:all) # => returns a list the live videos
+    
+    pending = Video.find_pending(:all) # => returns a list of pending videos
+    
+    paused =  Video.find_paused(:all) # => returns a list of paused videos
+    
+    lifetime_stats = Video.find_live(:all, { 'statistics' =>  '1d,2d,7d,28d,30d,31d,lifetime' }) 
+    
+    all_trailers = Video.find(:all, { 'label[0]' => 'trailers' }) 
+    
+    specific_video = Video.find('plajrfuW5PS5rgc-kuc9ZWtFtdnYpfiK') 
+    
+    thumbnails = Video.find_thumbnails({'embedCode' => 'lsZzQ2OmH9JnR_MBNL8KUyn1z6YaMLMp', 'range' => '0-99', 'resolution' => '320x240'})
+  </code>
+</pre>
+
+h2. Helper Methods
+
+There is also a helper method for embeding the video in the view.
+<pre>
+  <code>
+    <%= embed_ooyala(@video, { :callback=>'ooyalaCallback', :width => "560", :height => "315", :autoplay => 1, :loop => 1, :playerId => 'ooyala_video' }) %>
+  </code>
+</pre>
+
+Copyright (c) 2008 Mark Daggett, released under the MIT license
